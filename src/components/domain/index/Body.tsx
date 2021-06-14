@@ -1,40 +1,48 @@
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
+    height: 'calc(100vh - 64px)',
+    backgroundImage: 'url(/chat.jpg)',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
   },
 
-  mobile: {
-    height: 'calc(100vh - 64px)',
+  text: {
+    color: 'white',
+    marginTop: theme.spacing(1),
+  },
+
+  button: {
+    width: '50vw',
+    maxWidth: '250px',
+    marginTop: theme.spacing(1),
   },
 }));
 
 const Body = () => {
   const classes = useStyles();
-  const éTelaPequena = useMediaQuery('(max-width:790px)');
-
-  console.log(éTelaPequena);
 
   return (
-    <Container
-      className={`${classes.root} ${éTelaPequena ? classes.mobile : ''}`}
-      component="main"
-    >
-      <Typography align="center" variant="h6">
+    <Container className={classes.root} component="main">
+      <Typography align="center" variant="h6" className={classes.text}>
         Entre e converse com seus amigos
       </Typography>
 
-      <video width="100%" height="auto" autoPlay loop muted>
-        <source src="indePageVideo.mp4" type="video/mp4" />
-      </video>
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        className={classes.button}
+      >
+        Faça login
+      </Button>
     </Container>
   );
 };
