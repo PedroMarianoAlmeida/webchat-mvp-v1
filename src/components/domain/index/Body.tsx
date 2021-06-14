@@ -3,6 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { auth, googleAuthProvider } from './../../../config/firebaseConfig';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -40,6 +42,7 @@ const Body = () => {
         color="primary"
         size="large"
         className={classes.button}
+        onClick={() => auth.signInWithPopup(googleAuthProvider)}
       >
         Faça login
       </Button>

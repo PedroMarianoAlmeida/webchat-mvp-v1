@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 
+import { auth, googleAuthProvider } from './../../../config/firebaseConfig';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -45,7 +47,12 @@ export default function MinhaAppBar() {
             <Typography variant="h6" className={classes.saudação}>
               Bem vindo,
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button
+              color="inherit"
+              onClick={() => auth.signInWithPopup(googleAuthProvider)}
+            >
+              Login
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
