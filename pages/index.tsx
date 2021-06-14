@@ -1,19 +1,15 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import Button from '@material-ui/core/Button';
-import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
-import Skeleton from '@material-ui/lab/Skeleton';
-
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './../src/config/firebaseConfig';
+
+import MinhaAppBar from '../src/components/domain/index/MinhaAppBar';
+import Body from '../src/components/domain/index/Body';
 
 export default function Home() {
   const router = useRouter();
-
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
-
+  const [user, loading, error] = useAuthState(auth);
   console.log(user);
 
   useEffect(() => {
@@ -24,18 +20,8 @@ export default function Home() {
 
   return (
     <>
-      webChat
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() =>
-          signInWithEmailAndPassword('teste@teste.com', 'password')
-        }
-      >
-        Primary
-      </Button>
-      <AccessAlarmIcon />
-      <Skeleton variant="circle" width={40} height={40} />
+      <MinhaAppBar />
+      <Body />
     </>
   );
 }
