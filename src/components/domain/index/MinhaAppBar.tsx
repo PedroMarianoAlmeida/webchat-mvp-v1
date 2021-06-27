@@ -7,6 +7,8 @@ import Box from '@material-ui/core/Box';
 
 import { auth, googleAuthProvider } from './../../../config/firebaseConfig';
 
+import Logo from './../../shared/Logo';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -17,10 +19,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-
-  logo: {
-    fontFamily: "'VT323', monospace",
   },
 
   menuButton: {
@@ -40,9 +38,7 @@ export default function MinhaAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar className={classes.menu}>
-          <Typography variant="h4" component="div" className={classes.logo}>
-            webChat
-          </Typography>
+          <Logo />
           <Box>
             <Typography variant="h6" className={classes.saudação}>
               Bem vindo,
