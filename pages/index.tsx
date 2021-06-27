@@ -10,7 +10,7 @@ import Body from '../src/components/domain/index/Body';
 export default function Home() {
   const router = useRouter();
   const [user, loading, error] = useAuthState(auth);
-  console.log(user);
+  //console.log(user);
 
   useEffect(() => {
     if (!loading && user) {
