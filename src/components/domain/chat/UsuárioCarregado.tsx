@@ -64,7 +64,11 @@ const UsuárioCarregado = ({ user }) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBarUsuárioCarregado drawerWidth={drawerWidth} />
+      <AppBarUsuárioCarregado
+        drawerWidth={drawerWidth}
+        displayName={user.displayName}
+        photoURL={user.photoURL}
+      />
       <Drawer
         className={classes.drawer}
         variant="permanent"
