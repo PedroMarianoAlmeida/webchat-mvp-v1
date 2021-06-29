@@ -79,7 +79,7 @@ const UsuárioCarregado = ({ user }) => {
       >
         <div className={classes.toolbar} />
         <Divider />
-        <NovoChat />
+        <NovoChat userEmail={user.email} />
 
         <Divider />
         <ListaDeChats />
