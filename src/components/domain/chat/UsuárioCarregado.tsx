@@ -9,6 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 
 import { db } from './../../../config/firebaseConfig';
+import { criaRegistoNaColeção } from './../../../functions/firestoreHandler';
 
 import AppBarUsuárioCarregado from './AppBarUsuárioCarregado';
 import NovoChat from './NovoChat';
@@ -44,21 +45,15 @@ const UsuárioCarregado = ({ user }) => {
     db.doc(`users/${user.email}`)
   );
 
+  const criaUsuárioNoBd = async (email, displayName, photoURL) => {
+    const record = { displayName, photoURL };
+    const [doc, error] = await criaRegistoNaColeção(db, 'users', email, record);
+    if (error) console.log('Error writing document: ', error);
+  };
+
   useEffect(() => {
-    if (!loading && !coleçãoUsuário?.exists) {
-      db.collection('users')
-        .doc(user.email)
-        .set({
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-        })
-        .then(() => {
-          //console.log('Document successfully written!');
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error);
-        });
-    }
+    if (!loading && !coleçãoUsuário?.exists)
+      criaUsuárioNoBd(user.email, user.displayName, user.photoURL);
   }, [coleçãoUsuário, loading]);
 
   return (
@@ -79,7 +74,7 @@ const UsuárioCarregado = ({ user }) => {
       >
         <div className={classes.toolbar} />
         <Divider />
-        <NovoChat />
+        <NovoChat userEmail={user.email} />
 
         <Divider />
         <ListaDeChats />
