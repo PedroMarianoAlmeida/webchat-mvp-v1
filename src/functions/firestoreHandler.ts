@@ -13,3 +13,17 @@ export const verificarSeRegistroExiste = async (
     return [null, error];
   }
 };
+
+export const criaRegistoNaColeção = async (
+  dbObject,
+  coleção: string,
+  chave: string,
+  registro: object
+) => {
+  try {
+    const doc = await dbObject.collection(coleção).doc(chave).set(registro);
+    return [doc, null];
+  } catch (error) {
+    return [null, error];
+  }
+};
