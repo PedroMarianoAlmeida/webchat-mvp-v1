@@ -1,11 +1,11 @@
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import List from '@material-ui/core/List';
-import Avatar from '@material-ui/core/Avatar';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { db } from './../../../config/firebaseConfig';
+import ChatItem from './ChatItem';
 
 const useStylesAux = makeStyles((theme) => ({
   chatItem: {
@@ -28,12 +28,6 @@ const Loading = () => {
       ))}
     </>
   );
-};
-
-const ChatItem = ({ email }) => {
-  console.log(email);
-  const classes = useStylesAux();
-  return <Avatar className={classes.chatItem}>A</Avatar>;
 };
 
 const ListaDeChats = ({ userEmail }) => {
