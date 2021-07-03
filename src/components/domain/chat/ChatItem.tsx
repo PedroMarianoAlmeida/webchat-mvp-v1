@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,8 +14,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChatItemCarregado = ({ dadosOutroUsuárioChat }) => {
+const ChatItemCarregado = ({ dadosOutroUsuárioChat, userEmail, email }) => {
+  const [chatNaTela, setChatNaTela] = useState('');
   const classes = useStyles();
+
+  const handleClick = () => {
+    const emailsOrdenados = [userEmail, email].sort().join('-');
+    console.log(emailsOrdenados);
+    setChatNaTela(emailsOrdenados);
+  };
 
   return (
     <Tooltip
@@ -23,12 +32,13 @@ const ChatItemCarregado = ({ dadosOutroUsuárioChat }) => {
       <Avatar
         alt={dadosOutroUsuárioChat.displayName}
         src={dadosOutroUsuárioChat.photoURL}
+        onClick={handleClick}
       />
     </Tooltip>
   );
 };
 
-const ChatItem = ({ email }) => {
+const ChatItem = ({ email, userEmail }) => {
   const [dadosOutroUsuárioChat, loading, error] = useDocumentData(
     db.collection('users').doc(email)
   );
@@ -39,7 +49,11 @@ const ChatItem = ({ email }) => {
       {loading ? (
         <Avatar className={classes.chatItem}>...</Avatar>
       ) : (
-        <ChatItemCarregado dadosOutroUsuárioChat={dadosOutroUsuárioChat} />
+        <ChatItemCarregado
+          email={email}
+          dadosOutroUsuárioChat={dadosOutroUsuárioChat}
+          userEmail={userEmail}
+        />
       )}
     </>
   );

@@ -51,7 +51,7 @@ const ListaDeChats = ({ userEmail }) => {
         <Loading />
       ) : (
         listaDeChats.chats.map((email) => (
-          <ChatItem email={email} key={email} />
+          <ChatItem email={email} key={email} userEmail={userEmail} />
         ))
       )}
     </List>
