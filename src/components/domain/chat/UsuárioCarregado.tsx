@@ -15,6 +15,7 @@ import AppBarUsuárioCarregado from './AppBarUsuárioCarregado';
 import NovoChat from './NovoChat';
 import ListaDeChats from './ListaDeChats';
 import ChatAtual from './ChatAtual';
+import ChatAtualProvider from '../../../contexts/ChatAtualProvider';
 
 const drawerWidth = 50;
 const useStyles = makeStyles((theme: Theme) =>
@@ -64,25 +65,27 @@ const UsuárioCarregado = ({ user }) => {
         displayName={user.displayName}
         photoURL={user.photoURL}
       />
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        anchor="left"
-      >
-        <div className={classes.toolbar} />
-        <Divider />
-        <NovoChat userEmail={user.email} />
+      <ChatAtualProvider>
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          anchor="left"
+        >
+          <div className={classes.toolbar} />
+          <Divider />
+          <NovoChat userEmail={user.email} />
 
-        <Divider />
-        <ListaDeChats userEmail={user.email} />
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <ChatAtual />
-      </main>
+          <Divider />
+          <ListaDeChats userEmail={user.email} />
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <ChatAtual />
+        </main>
+      </ChatAtualProvider>
     </div>
   );
 };
