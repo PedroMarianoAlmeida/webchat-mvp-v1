@@ -1,3 +1,4 @@
+import firebase from 'firebase/app';
 import { useState } from 'react';
 
 import Paper from '@material-ui/core/Paper';
@@ -66,8 +67,18 @@ export default function NovoChat({ userEmail }) {
             criaRegistoNaColeção(db, 'chats', emailsOrdenados, {
               conversation: [],
             });
-            //A FAZER: Passar esse chat para o chat atual
+            db.collection('users')
+              .doc(userEmail)
+              .update({
+                chats: firebase.firestore.FieldValue.arrayUnion(email),
+              });
+            db.collection('users')
+              .doc(email)
+              .update({
+                chats: firebase.firestore.FieldValue.arrayUnion(userEmail),
+              });
             setOpen(false);
+            //A FAZER: Passar esse chat para o chat atual
           }
         }
       } else setError('Usuário não cadastrado');
