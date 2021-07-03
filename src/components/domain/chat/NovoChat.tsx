@@ -1,4 +1,3 @@
-import firebase from 'firebase/app';
 import { useState } from 'react';
 
 import Paper from '@material-ui/core/Paper';
@@ -12,10 +11,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { db } from './../../../config/firebaseConfig';
-import {
-  verificarSeRegistroExiste,
-  criaRegistoNaColeção,
-} from './../../../functions/firestoreHandler';
+import { criaNovoChat } from './../../../functions/firestoreHandler';
 
 const useStyles = makeStyles({
   modalContent: {
@@ -43,46 +39,10 @@ export default function NovoChat({ userEmail }) {
   const [error, setError] = useState('');
 
   const handleSubmit = async () => {
-    const [usuárioBuscadoExiste, erro] = await verificarSeRegistroExiste(
-      db,
-      'users',
-      email
-    );
-
-    if (erro) setError('Erro, por favor tente mais tarde');
-    else {
-      if (usuárioBuscadoExiste) {
-        const emailsOrdenados = [userEmail, email].sort().join('-');
-
-        const [chatBuscadoExiste, erro] = await verificarSeRegistroExiste(
-          db,
-          'chats',
-          emailsOrdenados
-        );
-        if (erro) setError('Erro, por favor tente mais tarde');
-        else {
-          if (chatBuscadoExiste)
-            setError('Você já inicou conversa com essa pessoa');
-          else {
-            criaRegistoNaColeção(db, 'chats', emailsOrdenados, {
-              conversation: [],
-            });
-            db.collection('users')
-              .doc(userEmail)
-              .update({
-                chats: firebase.firestore.FieldValue.arrayUnion(email),
-              });
-            db.collection('users')
-              .doc(email)
-              .update({
-                chats: firebase.firestore.FieldValue.arrayUnion(userEmail),
-              });
-            setOpen(false);
-            //A FAZER: Passar esse chat para o chat atual
-          }
-        }
-      } else setError('Usuário não cadastrado');
-    }
+    const data = { db, email, userEmail };
+    const { ok, message } = await criaNovoChat(data);
+    if (ok) setOpen(false);
+    else setError(message);
   };
 
   const classes = useStyles();
