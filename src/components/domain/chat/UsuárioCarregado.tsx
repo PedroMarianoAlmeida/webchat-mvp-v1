@@ -77,7 +77,7 @@ const UsuárioCarregado = ({ user }) => {
         <NovoChat userEmail={user.email} />
 
         <Divider />
-        <ListaDeChats />
+        <ListaDeChats userEmail={user.email} />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
