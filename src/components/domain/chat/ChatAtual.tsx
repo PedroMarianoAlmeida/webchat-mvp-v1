@@ -4,10 +4,8 @@ import Paper from '@material-ui/core/Paper';
 import { ChatAtualContext } from './../../../contexts/ChatAtualProvider';
 
 const ChatAtual = () => {
-  const value = useContext(ChatAtualContext);
-  console.log(value);
-
-  return <Paper elevation={3}>Meu chat atual</Paper>;
+  const { chatNaTela } = useContext(ChatAtualContext);
+  return <Paper elevation={3}>{chatNaTela}</Paper>;
 };
 
 export default ChatAtual;

@@ -1,10 +1,12 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
 export const ChatAtualContext = createContext(undefined);
 
 const ChatAtualProvider = ({ children }) => {
+  const [chatNaTela, setChatNaTela] = useState('');
+
   return (
-    <ChatAtualContext.Provider value={'meu chat atual'}>
+    <ChatAtualContext.Provider value={{ chatNaTela, setChatNaTela }}>
       {children}
     </ChatAtualContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Paper from '@material-ui/core/Paper';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { db } from './../../../config/firebaseConfig';
 import { criaNovoChat } from './../../../functions/firestoreHandler';
+import { ChatAtualContext } from './../../../contexts/ChatAtualProvider';
 
 const useStyles = makeStyles({
   modalContent: {
@@ -38,11 +39,17 @@ export default function NovoChat({ userEmail }) {
 
   const [error, setError] = useState('');
 
+  const { setChatNaTela } = useContext(ChatAtualContext);
+
   const handleSubmit = async () => {
     const data = { db, email, userEmail };
     const { ok, message } = await criaNovoChat(data);
-    if (ok) setOpen(false);
-    else setError(message);
+    if (ok) {
+      const emailsOrdenados = [userEmail, email].sort().join('-');
+      setChatNaTela(emailsOrdenados);
+      setEmail('');
+      setOpen(false);
+    } else setError(message);
   };
 
   const classes = useStyles();

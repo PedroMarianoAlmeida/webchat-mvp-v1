@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 
@@ -16,14 +16,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ChatItemCarregado = ({ dadosOutroUsuárioChat, userEmail, email }) => {
-  const [chatNaTela, setChatNaTela] = useState('');
   const classes = useStyles();
-  const value = useContext(ChatAtualContext);
-  console.log(value);
+  const { setChatNaTela } = useContext(ChatAtualContext);
 
   const handleClick = () => {
     const emailsOrdenados = [userEmail, email].sort().join('-');
-    console.log(emailsOrdenados);
     setChatNaTela(emailsOrdenados);
   };
 
